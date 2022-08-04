@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH --job-name=wjbc
+#SBATCH --mail-user=chenxgu@umich.edu
+#SBATCH --mail-type=BEGIN,END
+#SBATCH --time=100:00:00
+#SBATCH --account=mihalcea1
+#SBATCH --gres=gpu:1
+#SBATCH --partition=gpu
+#SBATCH --output=/home/chenxgu/personalized_language_modeling/scripts/validation-no-embedding-awd-lstm-lm-trained-on-weighted-subset-linear-ninetyfive/output_wjbc
+#SBATCH --nodes=1
+#SBATCH --mem-per-cpu=8g
+
+#cd /home/chenxgu
+export PATH=/home/chenxgu/anaconda3/bin:$PATH
+source ../../../.bashrc
+conda activate pytorch04
+python main.py --lr 3 --user_name wjbc --num_training_tokens 19000000 --data ../../data/250000_tokens_of_validation_users --pretrained_token_embedding '../GloVe-1.2-emsize-200/GloVe_200' --freeze_parameters --token_emsize 200 --batch_size 20 --dropouti 0.2 --dropouth 0.2 --dropout 0.2 --dropoute 0.1 --seed 20190930 --epoch 200 --save model_wjbc.pt > model_wjbc.log

@@ -1,0 +1,2 @@
+The model is trained on greatlakes.
+personalized_language_modeling/scripts/anchor-user-embedding-awd-lstm-lm-train-on-subset

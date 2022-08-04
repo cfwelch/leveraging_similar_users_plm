@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH --job-name=anchor-user-embedding-awd-lstm-lm
+#SBATCH --mail-user=chenxgu@umich.edu
+#SBATCH --mail-type=BEGIN,END
+#SBATCH --time=335:00:00
+#SBATCH --account=mihalcea1
+#SBATCH --gres=gpu:1
+#SBATCH --partition=gpu
+#SBATCH --output=/scratch/mihalcea_root/mihalcea1/chenxgu/user-embedding-scripts-6000/anchor-user-embedding-awd-lstm-lm/output.txt
+#SBATCH --nodes=1
+#SBATCH --mem-per-cpu=40g
+
+#cd /home/chenxgu
+export PATH=/home/chenxgu/anaconda3/bin:$PATH
+source /home/chenxgu/.bashrc
+conda activate pytorch04
+python main.py --lr 3 --num_training_token_per_user 6000 --num_validation_token_per_user 6000 --users_type anchor_users --data /scratch/mihalcea_root/mihalcea1/chenxgu/data_10000/60000_tokens_of_anchor_users --pretrained_token_embedding '../GloVe-1.2-emsize-200/GloVe_200' --freeze_parameters --token_emsize 200 --batch_size 30 --valid_batch_size 30 --test_batch_size 30 --dropouti 0.2 --dropouth 0.2 --dropout 0.2 --dropoute 0.1 --seed 20190930 --epoch 200 --save model_2.pt --nhid 500 > model_2.log
+
